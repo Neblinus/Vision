@@ -16,7 +16,7 @@ You can manage the size of the array on which the program operates through a com
 ```bash
 git clone https://github.com/Neblinus/Vision.git # Clone this repo
 gcc -o vision Vision/vision.c -O3                # Compile the transpiler with optimizations
-vision path/to/brainfuck/source.bf array_size    # Run with the input source and the desired array size in bytes
+./vision path/to/brainfuck/source.bf array_size    # Run with the input and desired array size (bytes)
 ```
 
 ## Example
@@ -24,7 +24,8 @@ vision path/to/brainfuck/source.bf array_size    # Run with the input source and
 BrainFuck source (prints "Hello World!\n"):
 
 ```brainfuck
-++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
+++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++
+..+++.>>.<-.<.+++.------.--------.>>+.>++.
 ```
 
 Pasting the code on a `sample.bf` file, and passing it to the transpiler with
@@ -83,7 +84,7 @@ int main(void)
 	*pointer -= 3;
 	printf("%c", *pointer);
 	*pointer += 7;
-	printf("%c", *pointer);
+	printf("%c", *pointer);printf("%c", *pointer);
 	*pointer += 3;
 	printf("%c", *pointer);
 	pointer += 2;
@@ -105,8 +106,8 @@ int main(void)
 	pointer += 1;
 	*pointer += 2;
 	printf("%c", *pointer);
-	
-}
+
+}	
 ```
 
 Which you can then compile and run:
