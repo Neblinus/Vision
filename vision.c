@@ -21,9 +21,9 @@ void VerifyArguments(int *argumentCount, char **arguments)
     ReportExit("Expected a path to the Brainfuck source and the memblock size in bytes.", 1);
   }
   // Path must be at least as lengthy as a.bf, ending in .bf
-  int pathLength = strlen(arguments[1]) - 1;
-  if (!(pathLength >= 3 && arguments[1][pathLength - 2] == '.' &&
-  arguments[1][pathLength - 1] == 'b' && arguments[1][pathLength] == 'f'))
+  int pathLength = strlen(arguments[1]);
+  if (!(pathLength >= 4 && arguments[1][pathLength - 3] == '.' &&
+  arguments[1][pathLength - 2] == 'b' && arguments[1][pathLength - 1] == 'f'))
   {
     ReportExit("Expected a path to the input source file ending in '.bf'.", 2);
   }
@@ -83,7 +83,11 @@ void WriteAnalogC(char inputToken, int inputCount, FILE *cSourceFile)
   }
   else
   {
-    writeOutputBytes = fprintf(cSourceFile, "%s\n\t", codeOutput);
+    for (inputCount; inputCount > 0; --inputCount)
+    {
+      writeOutputBytes = fprintf(cSourceFile, "%s", codeOutput);
+    }
+    writeOutputBytes = fprintf(cSourceFile, "\n\t", codeOutput);
   }
   if (writeOutputBytes < 0)
   {
@@ -107,7 +111,7 @@ void ParseBrainfuckSource(char *sourcePath, char *memblockSize)
 {
   int currentToken;
   int tokenCount = 0;
-  int previousToken = -5;
+  int previousToken = -1;
   FILE *bfSource = GetSafeFilePointer(sourcePath, "r");
   FILE *cSource = GetOutputFile(memblockSize);
   while ((currentToken = fgetc(bfSource)) != EOF)
@@ -120,7 +124,7 @@ void ParseBrainfuckSource(char *sourcePath, char *memblockSize)
     {
       continue;
     }
-    previousToken = (previousToken == -5) ? currentToken : previousToken;
+    previousToken = (previousToken == -1) ? currentToken : previousToken;
     (currentToken == previousToken) ? (tokenCount += 1) : (WriteAnalogC(previousToken,
     tokenCount, cSource), tokenCount = 1, previousToken = currentToken);
   }
