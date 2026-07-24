@@ -16,7 +16,7 @@ You can manage the size of the array on which the program operates through a com
 ```bash
 git clone https://github.com/Neblinus/Vision.git # Clone this repo
 gcc -o vision Vision/vision.c -O3                # Compile the transpiler with optimizations
-./vision path/to/brainfuck/source.bf array_size    # Run with the input and desired array size (bytes)
+./vision path/to/brainfuck/source.bf array_size  # Run with the input and desired array size (bytes)
 ```
 
 ## Example
